@@ -1,0 +1,7 @@
+1445234 init F1=1 INSERT=1 END=1 llhook=1 rawinput=1
+1492781 key id=1 src=hook act (age=1492781)
+1492781 F1 menu=open
+1492781 key id=1 src=raw held, ignored
+1492796 key id=1 src=poll held, ignored
+1500343 key id=3 src=hook act (age=1500343)
+1500343 END quit

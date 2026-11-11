@@ -1,0 +1,849 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<title>RRTool</title>
+<style>
+/* Tokens. */
+:root{
+  color-scheme:dark;
+  --bg:#0a0c10;
+  --surface:#11151c;
+  --surface-2:#161b24;
+  --raise:#1c2230;
+  --line:#232a37;
+  --hair:#1a1f29;
+  --text:#e7eaf1;
+  --muted:#8b94a6;
+  --faint:#596173;
+  --faint-text:#6b7383;
+  --accent:#7c8cff;
+  --accent-soft:#7c8cff22;
+  --ok:#4fd6a0;
+  --warn:#e8b45e;
+  --bad:#ff6f6f;
+  --r:10px;
+  --pad:16px;
+  --rail:182px;
+}
+*{box-sizing:border-box}
+html,body{height:100%}
+body{
+  margin:0;background:transparent;color:var(--text);
+  font:13px/1.4 'Segoe UI Variable Text','Segoe UI',system-ui,-apple-system,sans-serif;
+  -webkit-font-smoothing:antialiased;
+  overflow:hidden;
+}
+button,input,select,output{font:inherit;color:inherit}
+::selection{background:var(--accent-soft)}
+
+/* Shell. */
+#app{
+  position:fixed;inset:0;display:flex;flex-direction:column;
+  background:var(--bg);
+  border:1px solid #2b3444;border-radius:14px;overflow:hidden;
+  box-shadow:0 24px 70px #0008;
+}
+
+/* header */
+header{
+  display:flex;align-items:center;gap:14px;
+  height:48px;padding:0 10px 0 14px;flex:none;
+  border-bottom:1px solid var(--line);
+  background:linear-gradient(180deg,#151a23,#11151c);
+  touch-action:none;user-select:none;cursor:grab;
+}
+header.dragging{cursor:grabbing}
+.brand{display:flex;align-items:center;gap:9px;min-width:0}
+.brand svg{width:19px;height:19px;color:var(--accent);flex:none}
+.brand b{font-size:14px;font-weight:650;letter-spacing:.01em}
+.brand span{display:block;font-size:9.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--faint-text)}
+.spacer{flex:1}
+
+.pill{
+  display:inline-flex;align-items:center;gap:7px;height:24px;
+  padding:0 10px 0 8px;border:1px solid var(--line);border-radius:999px;
+  background:#0e1218;color:var(--muted);font-size:11.5px;white-space:nowrap;
+}
+.pill i{width:6px;height:6px;border-radius:50%;background:var(--faint-text);flex:none;transition:background .2s}
+.pill[data-live="1"]{color:var(--text);border-color:#2c4a3f}
+.pill[data-live="1"] i{background:var(--ok);box-shadow:0 0 0 3px #4fd6a022}
+.pill em{font-style:normal;font-variant-numeric:tabular-nums}
+
+.hact{display:flex;align-items:center;gap:6px}
+.btn{
+  height:27px;padding:0 11px;border:1px solid var(--line);border-radius:7px;
+  background:var(--surface-2);color:var(--text);cursor:pointer;
+  font-size:12px;transition:border-color .12s,background .12s,color .12s;
+}
+.btn:hover{border-color:#3d4a63;background:var(--raise)}
+.btn:active{transform:translateY(1px)}
+.btn.icon{width:27px;padding:0;font-size:15px;line-height:1;color:var(--muted)}
+.btn.icon:hover{color:var(--text)}
+.btn.ghost{background:transparent}
+.btn.primary{background:var(--accent);border-color:var(--accent);color:#0b0d12;font-weight:600}
+.btn.primary:hover{background:#8f9dff}
+.btn:focus-visible,.pill:focus-visible{outline:2px solid var(--accent);outline-offset:2px}
+
+/* body: rail + pages */
+.body{display:flex;flex:1;min-height:0}
+nav{
+  width:var(--rail);flex:none;display:flex;flex-direction:column;gap:2px;
+  padding:10px 8px;border-right:1px solid var(--line);background:#0d1015;
+}
+nav button{
+  position:relative;display:flex;align-items:center;gap:10px;
+  height:36px;padding:0 10px;border:0;border-radius:8px;
+  background:transparent;color:var(--muted);cursor:pointer;
+  font-size:12.5px;text-align:left;transition:background .12s,color .12s;
+}
+nav button svg{width:16px;height:16px;flex:none;opacity:.85}
+nav button:hover{background:#151a22;color:var(--text)}
+nav button[aria-selected="true"]{background:#171d28;color:var(--text)}
+nav button[aria-selected="true"] svg{color:var(--accent);opacity:1}
+nav button[aria-selected="true"]::before{
+  content:"";position:absolute;left:0;top:8px;bottom:8px;width:2px;
+  border-radius:2px;background:var(--accent);
+}
+nav button:focus-visible{outline:2px solid var(--accent);outline-offset:-2px}
+
+main{flex:1;min-width:0;overflow-y:auto;overflow-x:hidden;padding:16px 20px 18px;scrollbar-gutter:stable}
+main > section{scroll-margin-top:16px}
+main::-webkit-scrollbar{width:10px}
+main::-webkit-scrollbar-thumb{background:#232b3a;border-radius:6px;border:3px solid var(--bg)}
+main::-webkit-scrollbar-thumb:hover{background:#2f3a4d}
+main::-webkit-scrollbar-track{background:transparent}
+
+/* page header */
+.phead{padding:0 2px 12px}
+.phead h1{margin:0;font-size:16px;font-weight:650;letter-spacing:-.01em}
+.phead p{margin:4px 0 0;color:var(--muted);font-size:12px;max-width:62ch}
+
+/* cards */
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:11px;align-items:start}
+.grid.one{grid-template-columns:minmax(0,1fr)}
+.card{
+  border:1px solid var(--line);border-radius:var(--r);
+  background:linear-gradient(180deg,#141922,#101419);
+  padding:2px 0 4px;
+}
+.card > h2{
+  margin:0;padding:10px 14px 7px;
+  font-size:10px;font-weight:600;letter-spacing:.11em;text-transform:uppercase;color:var(--faint-text);
+}
+.card > .rows{padding:0 14px 8px}
+.card > p{margin:0;padding:2px 14px 10px;color:var(--muted);font-size:11.5px;line-height:1.5}
+.card.warn{border-color:#4a3a22;background:linear-gradient(180deg,#1a1712,#131110)}
+.card.warn > h2{color:#c79a5a}
+
+/* rows */
+.row{
+  display:flex;align-items:center;justify-content:space-between;gap:14px;
+  min-height:32px;cursor:pointer;border-top:1px solid var(--hair);
+}
+.rows > .row:first-child{border-top:0}
+.row > span{display:flex;flex-direction:column;gap:1px;min-width:0}
+.row small{color:var(--faint-text);font-size:10.5px;line-height:1.35}
+.row:hover > span{color:#fff}
+
+/* switch */
+.row input[type=checkbox]{position:absolute;opacity:0;width:0;height:0;pointer-events:none}
+i.sw{
+  position:relative;flex:none;width:36px;height:20px;border-radius:999px;
+  background:#252d3b;border:1px solid #2e3849;
+  transition:background .16s,border-color .16s;
+}
+i.sw::after{
+  content:"";position:absolute;top:2px;left:2px;width:14px;height:14px;border-radius:50%;
+  background:#9aa5b8;transition:transform .16s,background .16s;
+}
+input[type=checkbox]:checked + i.sw{background:var(--accent);border-color:var(--accent)}
+input[type=checkbox]:checked + i.sw::after{transform:translateX(16px);background:#0b0d12}
+input[type=checkbox]:focus-visible + i.sw{outline:2px solid var(--accent-soft);outline-offset:2px;box-shadow:0 0 0 3px #7c8cff33}
+
+/* slider row */
+.srow{display:block;padding:7px 0 9px;border-top:1px solid var(--hair);cursor:default}
+.rows > .srow:first-child{border-top:0}
+.srow .top{display:flex;align-items:center;justify-content:space-between;gap:12px;margin-bottom:5px}
+.srow .top > span{color:var(--text);font-size:12.5px}
+.srow output{
+  flex:none;min-width:64px;text-align:right;padding:2px 7px;
+  border:1px solid var(--line);border-radius:6px;background:#0c1015;
+  font-size:11.5px;font-variant-numeric:tabular-nums;color:var(--accent)
+}
+input[type=range]{
+  -webkit-appearance:none;appearance:none;width:100%;height:16px;background:transparent;cursor:pointer;
+}
+input[type=range]::-webkit-slider-runnable-track{
+  height:4px;border-radius:3px;
+  background:linear-gradient(90deg,var(--accent) 0,var(--accent) var(--pct,0%),#2e384a var(--pct,0%),#2e384a 100%);
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:14px;height:14px;margin-top:-5px;border-radius:50%;
+  background:#fff;border:0;box-shadow:0 1px 4px #0009;
+  transition:transform .1s;
+}
+input[type=range]:hover::-webkit-slider-thumb{transform:scale(1.12)}
+input[type=range]:focus-visible{outline:none}
+input[type=range]:focus-visible::-webkit-slider-thumb{box-shadow:0 0 0 3px #7c8cff44}
+
+/* chips (loot tiers) */
+.chips{display:flex;flex-wrap:wrap;gap:6px;padding:2px 14px 12px}
+.chip{
+  position:relative;display:inline-flex;align-items:center;gap:6px;
+  height:26px;padding:0 10px;border:1px solid var(--line);border-radius:999px;
+  background:#0e1218;color:var(--muted);font-size:11.5px;cursor:pointer;
+  transition:all .12s;
+}
+.chip input{position:absolute;opacity:0;width:0;height:0}
+.chip::before{
+  content:"";width:6px;height:6px;border-radius:50%;background:#333c4d;transition:background .12s;
+}
+.chip:hover{border-color:#3a465c;color:var(--text)}
+.chip:has(input:checked){border-color:#3b4a72;background:#151b2a;color:var(--text)}
+.chip:has(input:checked)::before{background:var(--accent)}
+.chip:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:2px}
+
+/* actions */
+.act{display:flex;align-items:center;justify-content:space-between;gap:12px;min-height:40px;border-top:1px solid var(--hair)}
+.rows > .act:first-child{border-top:0}
+.act > span{display:flex;flex-direction:column;gap:2px}
+.act small{color:var(--faint-text);font-size:10.5px}
+.inline{display:flex;align-items:center;gap:8px;flex:none}
+kbd{
+  display:inline-block;padding:1px 5px;border:1px solid var(--line);border-bottom-width:2px;
+  border-radius:4px;background:#0d1116;color:var(--muted);font:10.5px/1.5 ui-monospace,'Cascadia Mono',monospace;
+}
+.status{
+  display:flex;align-items:baseline;gap:8px;padding:10px 0 2px;border-top:1px solid var(--hair);
+  color:var(--muted);font-size:11.5px;
+}
+.status output{color:var(--text)}
+.status output[data-bad="1"]{color:var(--warn)}
+
+/* key bind */
+.bind{
+  display:flex;align-items:center;justify-content:space-between;gap:12px;
+  min-height:40px;border-top:1px solid var(--hair);
+}
+.bind button{
+  min-width:104px;height:28px;padding:0 12px;border:1px solid var(--line);border-radius:7px;
+  background:#0e1218;color:var(--text);cursor:pointer;font-size:11.5px;
+}
+.bind button:hover{border-color:var(--accent);color:var(--accent)}
+.bind button.arm{border-color:var(--accent);color:var(--accent);background:var(--accent-soft)}
+
+/* select */
+select{
+  height:28px;padding:0 8px;border:1px solid var(--line);border-radius:7px;
+  background:#0e1218;color:var(--text);cursor:pointer;font-size:12px;max-width:170px;
+}
+select:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+
+/* color swatch */
+.swatch{display:flex;align-items:center;justify-content:space-between;gap:10px;min-height:40px;border-top:1px solid var(--hair)}
+.rows > .swatch:first-child{border-top:0}
+.swatch .meta{display:flex;flex-direction:column;gap:1px}
+.swatch .hex{font:10.5px ui-monospace,'Cascadia Mono',monospace;color:var(--faint-text)}
+input[type=color]{
+  width:38px;height:26px;padding:0;border:1px solid var(--line);border-radius:6px;
+  background:#0e1218;cursor:pointer;
+}
+input[type=color]::-webkit-color-swatch-wrapper{padding:2px}
+input[type=color]::-webkit-color-swatch{border:0;border-radius:4px}
+
+/* legend */
+.legend{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:7px 14px;padding:2px 14px 12px}
+.legend span{display:flex;align-items:center;gap:8px;color:var(--muted);font-size:11.5px}
+.legend i{width:7px;height:7px;border-radius:50%;background:var(--c);flex:none;box-shadow:0 0 0 2px #ffffff0a}
+
+/* details */
+details{border-top:1px solid var(--hair);padding:9px 0 2px}
+details summary{
+  cursor:pointer;color:var(--muted);font-size:11.5px;list-style:none;
+  display:flex;align-items:center;gap:6px;
+}
+details summary::-webkit-details-marker{display:none}
+details summary::before{content:"?";display:grid;place-items:center;width:14px;height:14px;border-radius:50%;border:1px solid var(--line);font-size:9px;color:var(--faint-text)}
+details[open] summary{color:var(--text)}
+details p{margin:8px 0 4px;color:var(--muted);font-size:11.5px;line-height:1.55}
+
+/* number input */
+input[type=number]{
+  width:74px;height:28px;padding:0 8px;border:1px solid var(--line);border-radius:7px;
+  background:#0e1218;color:var(--text);font-variant-numeric:tabular-nums;
+}
+input[type=number]:focus-visible{outline:2px solid var(--accent);outline-offset:1px}
+
+/* footer */
+footer{
+  display:flex;align-items:center;gap:10px;flex:none;height:27px;
+  padding:0 14px;border-top:1px solid var(--line);background:#0c0f14;
+  color:var(--faint-text);font-size:10.5px;
+}
+footer .dot{background:#39424f;flex:none}
+footer .dot[data-live="1"]{background:var(--ok)}
+footer .keys{margin-left:auto;display:flex;gap:10px;align-items:center;white-space:nowrap}
+footer .keys b{font-weight:500;color:var(--muted)}
+#preview{display:none;padding:1px 7px;border:1px solid #4a3a22;border-radius:999px;color:var(--warn);font-size:10px;letter-spacing:.06em;text-transform:uppercase}
+body[data-preview="1"] #preview{display:inline-block}
+
+/* toast */
+#toast{
+  position:absolute;right:16px;bottom:38px;transform:translateY(8px);
+  max-width:70%;padding:7px 13px;border:1px solid #2c3648;border-radius:8px;
+  background:#161b24;color:var(--text);font-size:12px;box-shadow:0 8px 28px #0009;
+  opacity:0;pointer-events:none;transition:opacity .18s,transform .18s;
+}
+#toast.up{opacity:1;transform:translateY(0)}
+
+/* narrow: rail becomes a top strip (150% DPI makes 976px behave like ~650px) */
+@media (max-width:780px){
+  .body{flex-direction:column}
+  nav{
+    width:auto;flex-direction:row;gap:4px;overflow-x:auto;padding:7px 8px;
+    border-right:0;border-bottom:1px solid var(--line);
+  }
+  nav button{height:30px;padding:0 10px;flex:none;font-size:12px}
+  nav button[aria-selected="true"]::before{left:8px;right:8px;top:auto;bottom:0;width:auto;height:2px}
+  nav::-webkit-scrollbar{height:0}
+}
+@media (max-width:660px){
+  .grid{grid-template-columns:minmax(0,1fr)}
+  main{padding:14px}
+  .brand span{display:none}
+}
+@media (max-width:780px){
+  footer .keys span:nth-child(n+3){display:none}
+}
+@media (prefers-reduced-motion:reduce){
+  *{transition:none!important}
+}
+</style>
+</head>
+<body>
+<div id="app">
+
+  <header id="head">
+    <div class="brand">
+      <svg viewBox="0 0 20 20" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true">
+        <path d="M10 2.5 16.5 6v8L10 17.5 3.5 14V6L10 2.5Z" stroke-linejoin="round"/>
+        <path d="M10 7.2 12.8 8.8v3.2L10 13.6 7.2 12V8.8L10 7.2Z" stroke-linejoin="round" opacity=".55"/>
+      </svg>
+      <div><b>RRTool</b><span>Rob Run</span></div>
+    </div>
+    <div class="spacer"></div>
+    <span class="pill" id="pill" data-live="0" role="status"><i aria-hidden="true"></i><em>No game</em></span>
+    <div class="hact">
+      <button class="btn" id="save" type="button">Save</button>
+      <button class="btn" id="load" type="button">Load</button>
+      <button class="btn icon" id="close" type="button" aria-label="Close menu" title="Close (Esc)">&times;</button>
+    </div>
+  </header>
+
+  <div class="body">
+    <nav id="rail" role="tablist" aria-label="Menu sections">
+      <button type="button" role="tab" data-tab="players" aria-selected="true" aria-controls="players" tabindex="0">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><circle cx="6" cy="5.2" r="2.2"/><path d="M2.3 13.2c0-2 1.7-3.4 3.7-3.4s3.7 1.4 3.7 3.4"/><circle cx="11.6" cy="5.9" r="1.7"/><path d="M10.2 9.9c1.8 0 3.2 1.2 3.2 3.1"/></svg>
+        Players
+      </button>
+      <button type="button" role="tab" data-tab="labels" aria-selected="false" aria-controls="labels" tabindex="-1">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M2.6 8.6V4.2c0-.9.7-1.6 1.6-1.6h4.4L13.4 7.4 8.2 12.6 2.6 8.6Z"/><circle cx="5.6" cy="5.6" r=".9"/></svg>
+        Labels
+      </button>
+      <button type="button" role="tab" data-tab="loot" aria-selected="false" aria-controls="loot" tabindex="-1">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M2.8 6.4 8 3l5.2 3.4v5.2L8 15 2.8 11.6V6.4Z"/><path d="M2.8 6.4 8 9.8l5.2-3.4M8 9.8V15" opacity=".55"/></svg>
+        Loot
+      </button>
+      <button type="button" role="tab" data-tab="aim" aria-selected="false" aria-controls="aim" tabindex="-1">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="4.4"/><path d="M8 1.4v2.6M8 12v2.6M1.4 8h2.6M12 8h2.6"/></svg>
+        Aim
+      </button>
+      <button type="button" role="tab" data-tab="radar" aria-selected="false" aria-controls="radar" tabindex="-1">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" aria-hidden="true"><circle cx="8" cy="8" r="6"/><path d="M8 8l3.4-3.4"/><circle cx="8" cy="8" r="2.2" opacity=".55"/></svg>
+        Radar
+      </button>
+      <button type="button" role="tab" data-tab="colors" aria-selected="false" aria-controls="colors" tabindex="-1">
+        <svg viewBox="0 0 16 16" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linejoin="round" aria-hidden="true"><path d="M8 2.2c2.6 3.1 4.1 4.8 4.1 6.7a4.1 4.1 0 0 1-8.2 0c0-1.9 1.5-3.6 4.1-6.7Z"/></svg>
+        Colors
+      </button>
+    </nav>
+
+    <main id="pages">
+
+      <!-- Players. -->
+      <section id="players" role="tabpanel" aria-label="Players">
+        <div class="phead">
+          <h1>Players</h1>
+          <p>What the overlay draws around other characters, and how it decides who counts as friendly.</p>
+        </div>
+        <div class="grid">
+          <article class="card">
+            <h2>Visibility</h2>
+            <div class="rows">
+              <label class="row"><span>Enable overlay<small>Master switch for every ESP layer</small></span><input type="checkbox" data-key="enabled" checked><i class="sw"></i></label>
+              <label class="row"><span>Show own character</span><input type="checkbox" data-key="show_self"><i class="sw"></i></label>
+              <label class="row"><span>Clan members<small>Drawn in the clan colour</small></span><input type="checkbox" data-key="show_clan" checked><i class="sw"></i></label>
+              <label class="row"><span>Police coworkers</span><input type="checkbox" data-key="show_police" checked><i class="sw"></i></label>
+            </div>
+            <p>Civilian grey, citizen green, cop blue, robber red.</p>
+          </article>
+
+          <article class="card">
+            <h2>Rendering</h2>
+            <div class="rows">
+              <label class="row"><span>Boxes</span><input type="checkbox" data-key="show_box" checked><i class="sw"></i></label>
+              <label class="row"><span>Skeleton</span><input type="checkbox" data-key="show_skeleton" checked><i class="sw"></i></label>
+              <label class="row"><span>Head marker</span><input type="checkbox" data-key="show_head" checked><i class="sw"></i></label>
+              <label class="row"><span>Chams<small>Highlights the body through geometry</small></span><input type="checkbox" data-key="cham_on"><i class="sw"></i></label>
+            </div>
+          </article>
+
+          <article class="card">
+            <h2>Vehicles</h2>
+            <div class="rows">
+              <label class="row"><span>Vehicle chams</span><input type="checkbox" data-key="vehicle_chams"><i class="sw"></i></label>
+              <label class="row"><span>Vehicle markers</span><input type="checkbox" data-key="show_vehicle_markers"><i class="sw"></i></label>
+              <label class="row"><span>Vehicle occupants<small>Only when seat data is readable</small></span><input type="checkbox" data-key="show_vehicle_occupants"><i class="sw"></i></label>
+            </div>
+            <p>Seated characters use the vehicle transform; skeletons are suppressed in a car.</p>
+          </article>
+
+          <article class="card">
+            <h2>Ranges</h2>
+            <div class="rows">
+              <label class="srow"><span class="top"><span>ESP range</span><output></output></span><input type="range" min="0" max="2000" step="10" value="300" data-key="max_distance" data-scale="100" data-unit=" m"></label>
+              <label class="srow"><span class="top"><span>Skeleton range</span><output></output></span><input type="range" min="0" max="2000" step="10" value="150" data-key="skel_distance" data-scale="100" data-unit=" m"></label>
+              <label class="srow"><span class="top"><span>Line width</span><output></output></span><input type="range" min="1" max="4" step="1" value="1" data-key="line_w" data-unit=" px"></label>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Labels. -->
+      <section id="labels" role="tabpanel" aria-label="Labels" hidden>
+        <div class="phead">
+          <h1>Labels</h1>
+          <p>Text attached to each marker. Every line costs vertical space, so enable only what you read mid-fight.</p>
+        </div>
+        <div class="grid">
+          <article class="card">
+            <h2>Text lines</h2>
+            <div class="rows">
+              <label class="row"><span>Names<small>Not replicated for remote players in this build</small></span><input type="checkbox" data-key="show_name" checked><i class="sw"></i></label>
+              <label class="row"><span>Held weapon</span><input type="checkbox" data-key="show_weapon" checked><i class="sw"></i></label>
+              <label class="row"><span>Distance</span><input type="checkbox" data-key="show_distance" checked><i class="sw"></i></label>
+              <label class="row"><span>Armor<small>Shows an A badge when armoured</small></span><input type="checkbox" data-key="show_armor" checked><i class="sw"></i></label>
+              <label class="row"><span>Crouching</span><input type="checkbox" data-key="show_crouch"><i class="sw"></i></label>
+              <label class="row"><span>Health<small>Local player only; remote health is not replicated</small></span><input type="checkbox" data-key="show_health"><i class="sw"></i></label>
+            </div>
+          </article>
+          <article class="card">
+            <h2>Preview</h2>
+            <p>How the stack reads on a target, top to bottom:</p>
+            <div class="legend" style="grid-template-columns:minmax(0,1fr)">
+              <span><i style="--c:#8b94a6"></i>Name, or the marker id if unnamed</span>
+              <span><i style="--c:#e8b45e"></i>Weapon label, armour badge</span>
+              <span><i style="--c:#7c8cff"></i>Distance in metres</span>
+            </div>
+            <p>Distance is measured from the camera, matching what the game reports, not from the character root.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Loot. -->
+      <section id="loot" role="tabpanel" aria-label="Loot" hidden>
+        <div class="phead">
+          <h1>Loot</h1>
+          <p>World items, containers and nodes, filtered by rarity. Rarity filters apply to loose items and loot nodes alike.</p>
+        </div>
+        <div class="grid">
+          <article class="card">
+            <h2>Sources</h2>
+            <div class="rows">
+              <label class="row"><span>Loose items</span><input type="checkbox" data-key="show_loot"><i class="sw"></i></label>
+              <label class="row"><span>Loot nodes</span><input type="checkbox" data-key="show_loot_nodes"><i class="sw"></i></label>
+              <label class="row"><span>Containers</span><input type="checkbox" data-key="show_containers"><i class="sw"></i></label>
+              <label class="row"><span>Doors</span><input type="checkbox" data-key="show_doors"><i class="sw"></i></label>
+              <label class="row"><span>Dropped loot</span><input type="checkbox" data-key="show_dropped_loot"><i class="sw"></i></label>
+              <label class="row"><span>Vehicle loot</span><input type="checkbox" data-key="show_vehicle_loot"><i class="sw"></i></label>
+            </div>
+          </article>
+          <article class="card">
+            <h2>Rarity filter</h2>
+            <div class="chips">
+              <label class="chip"><input type="checkbox" data-key="loot_tier_none" checked>No rarity</label>
+              <label class="chip"><input type="checkbox" data-key="loot_tier_common" checked>Common</label>
+              <label class="chip"><input type="checkbox" data-key="loot_tier_uncommon" checked>Uncommon</label>
+              <label class="chip"><input type="checkbox" data-key="loot_tier_rare" checked>Rare</label>
+              <label class="chip"><input type="checkbox" data-key="loot_tier_epic" checked>Epic</label>
+              <label class="chip"><input type="checkbox" data-key="loot_tier_legendary" checked>Legendary</label>
+              <label class="chip"><input type="checkbox" data-key="loot_tier_exotic" checked>Exotic</label>
+            </div>
+            <p>Unchecking a tier hides it everywhere it is drawn, including dropped and vehicle loot.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Aim. -->
+      <section id="aim" role="tabpanel" aria-label="Aim" hidden>
+        <div class="phead">
+          <h1>Aim</h1>
+          <p>Moves the mouse toward a joint inside the FOV circle. It uses the same camera as the ESP, so it costs no extra reads.</p>
+        </div>
+        <div class="grid">
+          <article class="card">
+            <h2>Targeting</h2>
+            <div class="rows">
+              <label class="row"><span>Aim assist<small>Hold the bound key to engage</small></span><input type="checkbox" data-key="aa_on"><i class="sw"></i></label>
+              <label class="row"><span>Draw FOV circle</span><input type="checkbox" data-key="aa_show_fov" checked><i class="sw"></i></label>
+              <label class="row"><span>Visible only<small>Skip targets behind collision geometry</small></span><input type="checkbox" data-key="aa_los_on"><i class="sw"></i></label>
+              <label class="row"><span>Closest target first</span><input type="checkbox" data-key="aa_closest_first"><i class="sw"></i></label>
+              <label class="row"><span>Target clan members</span><input type="checkbox" data-key="aa_target_clan"><i class="sw"></i></label>
+              <label class="row"><span>Target police coworkers</span><input type="checkbox" data-key="aa_target_police"><i class="sw"></i></label>
+            </div>
+            <div class="status"><span>Collision data</span><output id="los">Off</output></div>
+          </article>
+
+          <article class="card">
+            <h2>Control</h2>
+            <div class="rows">
+              <div class="row" style="cursor:default">
+                <span>Target group<small>Nearest joint inside the group</small></span>
+                <select data-key="aa_bone">
+                  <option value="0">Head</option>
+                  <option value="1">Neck &amp; shoulders</option>
+                  <option value="2">Chest &amp; spine</option>
+                  <option value="3">Pelvis &amp; hips</option>
+                  <option value="4">Closest body joint</option>
+                  <option value="5">Arms</option>
+                  <option value="6">Legs</option>
+                  <option value="7">Face</option>
+                  <option value="8">Hands &amp; fingers</option>
+                  <option value="9">Feet &amp; toes</option>
+                </select>
+              </div>
+              <div class="bind">
+                <span>Hold key</span>
+                <button id="bind" type="button">Alt</button>
+              </div>
+              <label class="srow"><span class="top"><span>FOV radius</span><output></output></span><input type="range" min="30" max="600" step="5" value="150" data-key="aa_fov_px" data-unit=" px"></label>
+              <label class="srow"><span class="top"><span>Smoothing</span><output></output></span><input type="range" min="1" max="10" step="1" value="5" data-key="aa_smooth"></label>
+              <label class="srow"><span class="top"><span>Mouse calibration</span><output></output></span><input type="range" min="10" max="2000" step="1" value="100" data-key="aa_aim_cal"></label>
+              <label class="srow"><span class="top"><span>Aim range</span><output></output></span><input type="range" min="0" max="1000" step="10" value="0" data-key="aa_dist" data-unit=" m"></label>
+              <details>
+                <summary>Why calibration matters</summary>
+                <p>It is the number of mouse counts that move the crosshair one pixel, times 100. Run <b>AIMTEST.bat</b> with the game focused and enter the value it prints. Left at 100 the assist assumes one count is one pixel and converges far too slowly.</p>
+              </details>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- Radar. -->
+      <section id="radar" role="tabpanel" aria-label="Radar" hidden>
+        <div class="phead">
+          <h1>Radar</h1>
+          <p>A top-down plot centred on you. The top of the circle is where you are looking.</p>
+        </div>
+        <div class="grid">
+          <article class="card">
+            <h2>Settings</h2>
+            <div class="rows">
+              <label class="row"><span>Show radar</span><input type="checkbox" data-key="radar_on" checked><i class="sw"></i></label>
+              <label class="row"><span>Include world markers<small>Loot, containers, doors and vehicles</small></span><input type="checkbox" data-key="radar_world"><i class="sw"></i></label>
+              <label class="srow"><span class="top"><span>Radar range</span><output></output></span><input type="range" min="25" max="500" step="5" value="150" data-key="radar_range" data-unit=" m"></label>
+            </div>
+            <p>The outer ring marks the selected range. The centre arrow is you; downed players are drawn as hollow dots.</p>
+          </article>
+          <article class="card">
+            <h2>Legend</h2>
+            <div class="legend">
+              <span><i style="--c:#da99ff"></i>Clan</span>
+              <span><i style="--c:#56fff6"></i>Police coworkers</span>
+              <span><i style="--c:#5aaaff"></i>Police</span>
+              <span><i style="--c:#ff5656"></i>Robbers</span>
+              <span><i style="--c:#ebebeb"></i>Loose items</span>
+              <span><i style="--c:#c99bff"></i>Loot nodes</span>
+              <span><i style="--c:#ffbe5c"></i>Containers</span>
+              <span><i style="--c:#c8c8c8"></i>Doors</span>
+              <span><i style="--c:#6fe891"></i>Dropped loot</span>
+              <span><i style="--c:#69b2ff"></i>Vehicle loot</span>
+              <span><i style="--c:#ffd66e"></i>Vehicles</span>
+            </div>
+            <p>The visibility switches on the Players page also apply here.</p>
+          </article>
+        </div>
+      </section>
+
+      <!-- Colors. -->
+      <section id="colors" role="tabpanel" aria-label="Colors" hidden>
+        <div class="phead">
+          <h1>Colors</h1>
+          <p>Marker palette. Role colours follow the character's role; the slots below are the shared ones.</p>
+        </div>
+        <div class="grid">
+          <article class="card">
+            <h2>Markers</h2>
+            <div class="rows">
+              <div class="swatch"><span class="meta"><span>Default marker</span><span class="hex">#56A8FF</span></span><input type="color" value="#56a8ff" data-color="0"></div>
+              <div class="swatch"><span class="meta"><span>Downed marker</span><span class="hex">#FFFFFF</span></span><input type="color" value="#ffffff" data-color="5"></div>
+              <div class="swatch"><span class="meta"><span>Name</span><span class="hex">#FFFFFF</span></span><input type="color" value="#ffffff" data-color="6"></div>
+            </div>
+          </article>
+          <article class="card">
+            <h2>Labels &amp; reticle</h2>
+            <div class="rows">
+              <div class="swatch"><span class="meta"><span>Weapon</span><span class="hex">#FFFFFF</span></span><input type="color" value="#ffffff" data-color="7"></div>
+              <div class="swatch"><span class="meta"><span>Distance</span><span class="hex">#FFFFFF</span></span><input type="color" value="#ffffff" data-color="8"></div>
+              <div class="swatch"><span class="meta"><span>Armor</span><span class="hex">#FFFFFF</span></span><input type="color" value="#ffffff" data-color="9"></div>
+              <div class="swatch"><span class="meta"><span>Aim circle</span><span class="hex">#C5A7FF</span></span><input type="color" value="#c5a7ff" data-color="14"></div>
+            </div>
+          </article>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <footer>
+    <span class="dot" id="fdot" aria-hidden="true"></span>
+    <span id="game">Waiting for game</span>
+    <span id="preview">Preview</span>
+    <span class="keys">
+      <span><b>F1</b> menu</span>
+      <span><b>Insert</b> overlay</span>
+     <span><b>End</b> exit</span>
+    </span>
+  </footer>
+
+  <div id="toast" role="status" aria-live="polite"></div>
+</div>
+
+<script>
+"use strict";
+const bridge = window.chrome && window.chrome.webview;
+const send = message => { if (bridge) bridge.postMessage(message); };
+const $ = id => document.getElementById(id);
+const all = (selector, root) => Array.prototype.slice.call((root || document).querySelectorAll(selector));
+
+if (!bridge) document.body.dataset.preview = "1";
+
+/* Pages. */
+const tabs = all("#rail [data-tab]");
+function activate(tab, focus) {
+  for (const candidate of tabs) {
+    const active = candidate === tab;
+    candidate.setAttribute("aria-selected", String(active));
+    candidate.tabIndex = active ? 0 : -1;
+    const page = $(candidate.dataset.tab);
+    if (page) page.hidden = !active;
+  }
+  $("pages").scrollTop = 0;
+  if (focus) tab.focus();
+}
+for (const tab of tabs) {
+  tab.addEventListener("click", () => activate(tab));
+}
+$("rail").addEventListener("keydown", event => {
+  const index = tabs.indexOf(document.activeElement);
+  if (index < 0) return;
+  let next = -1;
+  if (event.key === "ArrowDown" || event.key === "ArrowRight") next = (index + 1) % tabs.length;
+  else if (event.key === "ArrowUp" || event.key === "ArrowLeft") next = (index - 1 + tabs.length) % tabs.length;
+  else if (event.key === "Home") next = 0;
+  else if (event.key === "End") next = tabs.length - 1;
+  if (next >= 0) { event.preventDefault(); activate(tabs[next], true); }
+});
+
+/* Controls. */
+const controls = all("[data-key]");
+
+function paintRange(input) {
+  const min = Number(input.min), max = Number(input.max), value = Number(input.value);
+  const percent = max > min ? ((value - min) / (max - min)) * 100 : 0;
+  input.style.setProperty("--pct", percent.toFixed(2) + "%");
+  const output = input.parentElement.querySelector("output");
+  if (!output) return;
+  const unit = input.dataset.unit || "";
+  output.textContent = (unit === " m" && value === 0) ? "Unlimited" : value + unit;
+}
+
+function wire(input) {
+  if (input.type === "range") paintRange(input);
+  const eventName = input.type === "range" ? "input" : "change";
+  input.addEventListener(eventName, () => {
+    if (input.type === "range") paintRange(input);
+    const raw = input.type === "checkbox" ? (input.checked ? 1 : 0)
+                                         : Math.round(Number(input.value) * Number(input.dataset.scale || 1));
+    send("set:" + input.dataset.key + ":" + raw);
+  });
+}
+controls.forEach(wire);
+
+/* Colors. */
+const swatches = all("[data-color]");
+for (const input of swatches) {
+  input.addEventListener("input", () => {
+    const hex = input.value;
+    const pairs = hex.slice(1).match(/../g) || ["00", "00", "00"];
+    const rgb = pairs.map(pair => parseInt(pair, 16));
+    const meta = input.parentElement.querySelector(".hex");
+    if (meta) meta.textContent = hex.toUpperCase();
+    send("col:" + input.dataset.color + ":" + rgb.join(","));
+  });
+}
+
+/* Key bind. */
+const keyNames = {
+  1: "LMB", 2: "RMB", 4: "MMB", 5: "Mouse 4", 6: "Mouse 5", 9: "Tab",
+  16: "Shift", 17: "Ctrl", 18: "Alt", 20: "Caps Lock", 32: "Space",
+  13: "Enter", 27: "Esc", 192: "`", 189: "-", 187: "="
+};
+let aimKey = 0x12, binding = false;
+
+function keyName(value) {
+  if (value >= 112 && value <= 123) return "F" + (value - 111);
+  if (value >= 48 && value <= 90) return String.fromCharCode(value);
+  return keyNames[value] || "VK " + value;
+}
+function paintKey() {
+  const button = $("bind");
+  button.textContent = binding ? "Press a key" : keyName(aimKey);
+  button.classList.toggle("arm", binding);
+}
+function chooseKey(key) {
+  aimKey = key;
+  binding = false;
+  paintKey();
+  send("set:aa_key:" + key);
+}
+$("bind").addEventListener("click", () => { binding = !binding; paintKey(); });
+
+window.addEventListener("keydown", event => {
+  if (!binding) return;
+  event.preventDefault();
+  event.stopPropagation();
+  if (event.key === "Escape") { binding = false; paintKey(); }
+  else if (event.keyCode) chooseKey(event.keyCode);
+}, true);
+
+window.addEventListener("mousedown", event => {
+  if (!binding) return;
+  const key = [1, 4, 2, 5, 6][event.button];
+  if (key) { event.preventDefault(); chooseKey(key); }
+}, true);
+
+/* Actions. */
+$("save").addEventListener("click", () => send("act:save"));
+$("load").addEventListener("click", () => send("act:load"));
+$("close").addEventListener("click", () => send("close:"));
+
+/* Drag/move. */
+const head = $("head");
+let drag = null;
+head.addEventListener("pointerdown", event => {
+  if (event.target.closest("button, input, select")) return;
+  drag = [event.screenX, event.screenY];
+  head.classList.add("dragging");
+  head.setPointerCapture(event.pointerId);
+});
+head.addEventListener("pointermove", event => {
+  if (!drag) return;
+  send("drag:" + [event.screenX, event.screenY,
+                  event.screenX - drag[0], event.screenY - drag[1]].join(","));
+});
+function endDrag() {
+  if (drag) send("dragend:");
+  drag = null;
+  head.classList.remove("dragging");
+}
+head.addEventListener("pointerup", endDrag);
+head.addEventListener("pointercancel", endDrag);
+
+/* Toast. */
+let toastTimer = 0;
+function toast(text) {
+  const box = $("toast");
+  box.textContent = text;
+  box.classList.add("up");
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => box.classList.remove("up"), 2400);
+}
+
+/* State. */
+function applyState(config) {
+  for (const input of controls) {
+    const value = config[input.dataset.key];
+    if (value === undefined || value === null) continue;
+    if (input.type === "checkbox") input.checked = Boolean(value);
+    else input.value = value / Number(input.dataset.scale || 1);
+    if (input.type === "range") paintRange(input);
+  }
+  if (config.colors) {
+    for (const input of swatches) {
+      const rgb = config.colors[input.dataset.color];
+      if (!rgb) continue;
+      const hex = "#" + rgb.map(v => v.toString(16).padStart(2, "0")).join("");
+      input.value = hex;
+      const meta = input.parentElement.querySelector(".hex");
+      if (meta) meta.textContent = hex.toUpperCase();
+    }
+  }
+  if (typeof config.aa_key === "number") { aimKey = config.aa_key; paintKey(); }
+}
+
+function applyTelem(state) {
+  const lives = Boolean(state.pid);
+  const targets = Number(state.targets || 0);
+  const pill = $("pill");
+  pill.dataset.live = lives ? "1" : "0";
+  pill.querySelector("em").textContent = lives
+    ? (targets === 1 ? "1 player" : targets + " players")
+    : "No game";
+  $("fdot").dataset.live = lives ? "1" : "0";
+  $("game").textContent = lives ? "Attached to ROB RUN" : "Waiting for game";
+  $("los").textContent = ["Off", "Loading", "Ready"][state.los] || "Off";
+  $("los").dataset.bad = state.los === 1 ? "1" : "0";
+}
+
+bridge && bridge.addEventListener("message", event => {
+  const data = String(event.data || "");
+  const cut = data.indexOf(":");
+  const kind = cut < 0 ? data : data.slice(0, cut);
+  const payload = cut < 0 ? "" : data.slice(cut + 1);
+  if (kind === "toast") { toast(payload); return; }
+  if (kind === "state") {
+    try { applyState(JSON.parse(payload)); } catch (error) { toast("Bad state payload"); }
+    return;
+  }
+  if (kind === "telem") {
+    try { applyTelem(JSON.parse(payload)); } catch (error) { /* ignore malformed telemetry */ }
+  }
+});
+
+/* Escape closes the menu, unless a key capture is in progress. */
+window.addEventListener("keydown", event => {
+  if (binding || event.key !== "Escape") return;
+  send("close:");
+});
+
+paintKey();
+send("hello:");
+
+/* Deep link: menu.html#aim opens that page. Harmless in the overlay, useful
+   when the page is opened in a browser for layout work. */
+const linked = tabs.find(tab => "#" + tab.dataset.tab === location.hash);
+if (linked) {
+  activate(linked);
+  /* The browser also scrolls the fragment into view; undo it so the page
+     header is not clipped under the top edge. */
+  requestAnimationFrame(() => { $("pages").scrollTop = 0; });
+}
+window.addEventListener("hashchange", () => {
+  const target = tabs.find(tab => "#" + tab.dataset.tab === location.hash);
+  if (target) activate(target);
+});
+</script>
+</body>
+</html>

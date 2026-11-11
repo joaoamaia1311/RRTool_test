@@ -1,0 +1,17 @@
+# Build intermediates
+2_src_port/*.obj
+2_src_port/*.res
+2_src_port/RobRunPort.exe
+3_src_driver/x64/
+3_src_driver/driver.sys
+
+# Runtime output
+1_run/*.log
+1_run/robrun_runtime.txt
+1_run/robrun_chain.txt
+1_run/CoreRR.cfg
+
+# Windows / editor noise
+Thumbs.db
+desktop.ini
+*.swp

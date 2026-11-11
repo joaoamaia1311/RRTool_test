@@ -1,0 +1,406 @@
+{
+  "game": "ROB RUN",
+  "unity": null,
+  "input_sha256": {
+    "GameAssembly.dll": "179ffa488dd83598d67eacb991268c04230ceb839decac4bac1d923ec7cddc9c",
+    "global-metadata.dat": "ecfc50f5406fda756f3304f04f5331ff0768394b036ba37c1c3af7597ae11ecf"
+  },
+  "metadata_version": 39,
+  "pe_preferred_base": "0x180000000",
+  "dump": "F:\\Game Dev\\Rob Run\\analysis\\dump-update-20261107-131900",
+  "fields": {
+    "RR_OFF_WORLD_ENTITIES": {
+      "value": 56,
+      "class": "WorldModel",
+      "field": "WorldEntitiesModel",
+      "declaration": "private readonly WorldEntitiesModel <WorldEntitiesModel>k__BackingField"
+    },
+    "RR_OFF_WEM_BATTLE_CHARS": {
+      "value": 24,
+      "class": "WorldEntitiesModel",
+      "field": "_battleCharacters",
+      "declaration": "private readonly Dictionary<int, BattleCharacterModel> _battleCharacters"
+    },
+    "RR_OFF_WEM_VEHICLES": {
+      "value": 88,
+      "class": "WorldEntitiesModel",
+      "field": "_vehicles",
+      "declaration": "private readonly Dictionary<int, VehicleModel> _vehicles"
+    },
+    "RR_OFF_CHAR_ID": {
+      "value": 56,
+      "class": "BattleCharacterModel",
+      "field": "Id",
+      "declaration": "private readonly int <Id>k__BackingField"
+    },
+    "RR_OFF_CHAR_DATA": {
+      "value": 64,
+      "class": "BattleCharacterModel",
+      "field": "Data",
+      "declaration": "private readonly BattleCharacterData <Data>k__BackingField"
+    },
+    "RR_OFF_CHAR_CONFIG": {
+      "value": 72,
+      "class": "BattleCharacterModel",
+      "field": "Config",
+      "declaration": "private readonly BattleCharacterConfig <Config>k__BackingField"
+    },
+    "RR_OFF_CHAR_TRANSFORM": {
+      "value": 88,
+      "class": "BattleCharacterModel",
+      "field": "Transform",
+      "declaration": "private readonly ITransformModel <Transform>k__BackingField"
+    },
+    "RR_OFF_CHAR_REPL_TRANSFORM": {
+      "value": 96,
+      "class": "BattleCharacterModel",
+      "field": "ReplicatedTransform",
+      "declaration": "private readonly CharacterReplicatedTransformModel <ReplicatedTransform>k__BackingField"
+    },
+    "RR_OFF_CHAR_ISDEAD": {
+      "value": 240,
+      "class": "BattleCharacterModel",
+      "field": "IsDead",
+      "declaration": "private readonly IPrimitiveModel<bool> <IsDead>k__BackingField"
+    },
+    "RR_OFF_CHAR_PRIVATE": {
+      "value": 16,
+      "class": "BattleCharacterModel",
+      "field": "PrivateModel",
+      "declaration": "private readonly BattleCharacterPrivateModel <PrivateModel>k__BackingField"
+    },
+    "RR_OFF_CTM_X": {
+      "value": 16,
+      "class": "CharacterTransformModel",
+      "field": "X",
+      "declaration": "private float <X>k__BackingField"
+    },
+    "RR_OFF_CTM_Y": {
+      "value": 20,
+      "class": "CharacterTransformModel",
+      "field": "Y",
+      "declaration": "private float <Y>k__BackingField"
+    },
+    "RR_OFF_CTM_Z": {
+      "value": 24,
+      "class": "CharacterTransformModel",
+      "field": "Z",
+      "declaration": "private float <Z>k__BackingField"
+    },
+    "RR_OFF_CTM_PITCH": {
+      "value": 28,
+      "class": "CharacterTransformModel",
+      "field": "Pitch",
+      "declaration": "private float <Pitch>k__BackingField"
+    },
+    "RR_OFF_CTM_YAW": {
+      "value": 32,
+      "class": "CharacterTransformModel",
+      "field": "Yaw",
+      "declaration": "private float <Yaw>k__BackingField"
+    },
+    "RR_OFF_CTM_ROLL": {
+      "value": 36,
+      "class": "CharacterTransformModel",
+      "field": "Roll",
+      "declaration": "private float <Roll>k__BackingField"
+    },
+    "RR_OFF_TRANSFORM_X": {
+      "value": 16,
+      "class": "TransformModel",
+      "field": "_x",
+      "declaration": "private readonly IPrimitiveData<float> _x"
+    },
+    "RR_OFF_TRANSFORM_Y": {
+      "value": 24,
+      "class": "TransformModel",
+      "field": "_y",
+      "declaration": "private readonly IPrimitiveData<float> _y"
+    },
+    "RR_OFF_TRANSFORM_Z": {
+      "value": 32,
+      "class": "TransformModel",
+      "field": "_z",
+      "declaration": "private readonly IPrimitiveData<float> _z"
+    },
+    "RR_OFF_TRANSFORM_RX": {
+      "value": 40,
+      "class": "TransformModel",
+      "field": "_rx",
+      "declaration": "private readonly IPrimitiveData<float> _rx"
+    },
+    "RR_OFF_TRANSFORM_RY": {
+      "value": 48,
+      "class": "TransformModel",
+      "field": "_ry",
+      "declaration": "private readonly IPrimitiveData<float> _ry"
+    },
+    "RR_OFF_TRANSFORM_RZ": {
+      "value": 56,
+      "class": "TransformModel",
+      "field": "_rz",
+      "declaration": "private readonly IPrimitiveData<float> _rz"
+    },
+    "RR_OFF_RTRANSFORM_POS": {
+      "value": 16,
+      "class": "CharacterReplicatedTransformModel",
+      "field": "_position",
+      "declaration": "private readonly IPrimitiveData<Vector3> _position"
+    },
+    "RR_OFF_RTRANSFORM_RX": {
+      "value": 24,
+      "class": "CharacterReplicatedTransformModel",
+      "field": "_rx",
+      "declaration": "private readonly IPrimitiveData<float> _rx"
+    },
+    "RR_OFF_RTRANSFORM_RY": {
+      "value": 32,
+      "class": "CharacterReplicatedTransformModel",
+      "field": "_ry",
+      "declaration": "private readonly IPrimitiveData<float> _ry"
+    },
+    "RR_OFF_RTRANSFORM_RZ": {
+      "value": 40,
+      "class": "CharacterReplicatedTransformModel",
+      "field": "_rz",
+      "declaration": "private readonly IPrimitiveData<float> _rz"
+    },
+    "RR_OFF_DATA_COMMON": {
+      "value": 32,
+      "class": "BattleCharacterData",
+      "field": "CommonData",
+      "declaration": "private readonly BattleCharacterCommonData <CommonData>k__BackingField"
+    },
+    "RR_OFF_DATA_PRIVATE": {
+      "value": 40,
+      "class": "BattleCharacterData",
+      "field": "PrivateData",
+      "declaration": "private readonly BattleCharacterPrivateData <PrivateData>k__BackingField"
+    },
+    "RR_OFF_DATA_PUBLIC": {
+      "value": 48,
+      "class": "BattleCharacterData",
+      "field": "PublicData",
+      "declaration": "private readonly BattleCharacterPublicData <PublicData>k__BackingField"
+    },
+    "RR_OFF_COMMON_ROLE": {
+      "value": 32,
+      "class": "BattleCharacterCommonData",
+      "field": "Role",
+      "declaration": "private readonly IPrimitiveData<PlayerRoleDescription> <Role>k__BackingField"
+    },
+    "RR_OFF_PRIVATE_HEALTH": {
+      "value": 56,
+      "class": "BattleCharacterPrivateData",
+      "field": "Health",
+      "declaration": "private readonly IPrimitiveData<int> <Health>k__BackingField"
+    },
+    "RR_OFF_PUBLIC_ARMOR": {
+      "value": 56,
+      "class": "BattleCharacterPublicData",
+      "field": "HasArmor",
+      "declaration": "private readonly IPrimitiveData<bool> <HasArmor>k__BackingField"
+    },
+    "RR_OFF_CHAR_WEAPON": {
+      "value": 336,
+      "class": "BattleCharacterModel",
+      "field": "Weapon",
+      "declaration": "private readonly IWeaponModel <Weapon>k__BackingField"
+    },
+    "RR_OFF_CHAR_CROUCH": {
+      "value": 352,
+      "class": "BattleCharacterModel",
+      "field": "CrouchModel",
+      "declaration": "private readonly CrouchModel <CrouchModel>k__BackingField"
+    },
+    "RR_OFF_CHAR_STANCE": {
+      "value": 496,
+      "class": "BattleCharacterModel",
+      "field": "BattleStanceModel",
+      "declaration": "private readonly BattleStanceModel <BattleStanceModel>k__BackingField"
+    },
+    "RR_OFF_CHAR_PBM": {
+      "value": 600,
+      "class": "BattleCharacterModel",
+      "field": "PlayerBattleModel",
+      "declaration": "private readonly PlayerBattleModel <PlayerBattleModel>k__BackingField"
+    },
+    "RR_OFF_WEAPON_ITEM": {
+      "value": 16,
+      "class": "WeaponModel",
+      "field": "_itemInHands",
+      "declaration": "private readonly IInventoryItemModel _itemInHands"
+    },
+    "RR_OFF_CROUCH_BOOL": {
+      "value": 16,
+      "class": "CrouchModel",
+      "field": "_isCrouching",
+      "declaration": "private readonly IPrimitiveData<bool> _isCrouching"
+    },
+    "RR_OFF_STANCE_REF": {
+      "value": 24,
+      "class": "BattleStanceModel",
+      "field": "_battleStance",
+      "declaration": "private readonly IPrimitiveData<BattleStanceDescription> _battleStance"
+    },
+    "RR_OFF_PBM_DATA": {
+      "value": 16,
+      "class": "PlayerBattleModel",
+      "field": "Data",
+      "declaration": "private readonly PlayerBattleData <Data>k__BackingField"
+    },
+    "RR_OFF_CAM_POS": {
+      "value": 16,
+      "class": "BattleCameraModel",
+      "field": "Position",
+      "declaration": "private Vector3 <Position>k__BackingField"
+    },
+    "RR_OFF_CAM_ROT": {
+      "value": 28,
+      "class": "BattleCameraModel",
+      "field": "Orientation",
+      "declaration": "private Quaternion <Orientation>k__BackingField"
+    },
+    "RR_OFF_CAM_FWD": {
+      "value": 60,
+      "class": "BattleCameraModel",
+      "field": "Forward",
+      "declaration": "private Vector3 <Forward>k__BackingField"
+    },
+    "RR_OFF_CAM_RIGHT": {
+      "value": 72,
+      "class": "BattleCameraModel",
+      "field": "Right",
+      "declaration": "private Vector3 <Right>k__BackingField"
+    },
+    "RR_OFF_CAM_UP": {
+      "value": 84,
+      "class": "BattleCameraModel",
+      "field": "Up",
+      "declaration": "private Vector3 <Up>k__BackingField"
+    },
+    "RR_OFF_CAM_DIST": {
+      "value": 96,
+      "class": "BattleCameraModel",
+      "field": "DistanceToFollowTarget",
+      "declaration": "private float <DistanceToFollowTarget>k__BackingField"
+    },
+    "RR_OFF_HEALTH_VALUE": {
+      "value": 16,
+      "class": "HealthModel",
+      "field": "_health",
+      "declaration": "private readonly IPrimitiveData<int> _health"
+    },
+    "RR_OFF_HEALTH_DEAD": {
+      "value": 24,
+      "class": "HealthModel",
+      "field": "_isDead",
+      "declaration": "private readonly IPrimitiveModel<bool> _isDead"
+    },
+    "RR_OFF_HEALTH_MAX": {
+      "value": 32,
+      "class": "HealthModel",
+      "field": "_maxAmount",
+      "declaration": "private readonly int _maxAmount"
+    }
+  },
+  "missing": [],
+  "static_field_globals": {
+    "WorldModel": {
+      "rva": 136036160,
+      "votes": 1,
+      "methods_scanned": 20,
+      "candidates": [
+        {
+          "rva": 136036160,
+          "votes": 1
+        },
+        {
+          "rva": 135786256,
+          "votes": 1
+        },
+        {
+          "rva": 135801608,
+          "votes": 1
+        }
+      ]
+    },
+    "BattleCameraModel": {
+      "rva": 136002712,
+      "votes": 2,
+      "methods_scanned": 17,
+      "candidates": [
+        {
+          "rva": 136002712,
+          "votes": 2
+        },
+        {
+          "rva": 135622072,
+          "votes": 1
+        }
+      ]
+    },
+    "WorldEntitiesModel": {
+      "rva": 136016200,
+      "votes": 56,
+      "methods_scanned": 347,
+      "candidates": [
+        {
+          "rva": 136016200,
+          "votes": 56
+        },
+        {
+          "rva": 136015384,
+          "votes": 28
+        },
+        {
+          "rva": 136188720,
+          "votes": 5
+        },
+        {
+          "rva": 135439440,
+          "votes": 4
+        },
+        {
+          "rva": 135858320,
+          "votes": 4
+        },
+        {
+          "rva": 135304232,
+          "votes": 4
+        },
+        {
+          "rva": 136274328,
+          "votes": 3
+        },
+        {
+          "rva": 135189528,
+          "votes": 3
+        }
+      ]
+    },
+    "BattleCharacterModel": {
+      "rva": 135786256,
+      "votes": 1,
+      "methods_scanned": 106,
+      "candidates": [
+        {
+          "rva": 135786256,
+          "votes": 1
+        },
+        {
+          "rva": 135801608,
+          "votes": 1
+        },
+        {
+          "rva": 136014160,
+          "votes": 1
+        },
+        {
+          "rva": 135811384,
+          "votes": 1
+        }
+      ]
+    }
+  }
+}

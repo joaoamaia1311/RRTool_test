@@ -1,0 +1,713 @@
+{
+  "schema": 1,
+  "sources_sha256": {
+    "CppSDK/Models.hpp": "7ec618e8acf6f8ac6a9fbd0ad64facf81203e2ab4b4f8155a573be70c79ab098",
+    "CppSDK/Battle.hpp": "3aa3b6372cbb764c00a8428976be6565f31257a7f591e9c4687e68c1a5b459a9",
+    "CppSDK/Game.hpp": "277abd6addda8648be90545a3674d2a2ef603ea55839320583c854801dbf4226",
+    "CppSDK/Global.hpp": "e92e02f1489680638684ee39220794d61c1d9d1013111e9badbc4548264654fa"
+  },
+  "fields": {
+    "RR_OFF_WEM_CONTAINERS": {
+      "assembly": "Models",
+      "klass": "Models.Models.WorldEntities.WorldEntitiesModel",
+      "field": "_containers",
+      "offset": 32,
+      "instance_size": 2264,
+      "source": "CppSDK/Models.hpp",
+      "line": 75701
+    },
+    "RR_OFF_WEM_DROPPED_LOOT": {
+      "assembly": "Models",
+      "klass": "Models.Models.WorldEntities.WorldEntitiesModel",
+      "field": "_loots",
+      "offset": 56,
+      "instance_size": 2264,
+      "source": "CppSDK/Models.hpp",
+      "line": 75704
+    },
+    "RR_OFF_WEM_VEHICLE_LOOT": {
+      "assembly": "Models",
+      "klass": "Models.Models.WorldEntities.WorldEntitiesModel",
+      "field": "_vehicleLoots",
+      "offset": 64,
+      "instance_size": 2264,
+      "source": "CppSDK/Models.hpp",
+      "line": 75705
+    },
+    "RR_OFF_WEM_DOORS": {
+      "assembly": "Models",
+      "klass": "Models.Models.WorldEntities.WorldEntitiesModel",
+      "field": "_doors",
+      "offset": 72,
+      "instance_size": 2264,
+      "source": "CppSDK/Models.hpp",
+      "line": 75706
+    },
+    "RR_OFF_WEM_CARS": {
+      "assembly": "Models",
+      "klass": "Models.Models.WorldEntities.WorldEntitiesModel",
+      "field": "_cars",
+      "offset": 96,
+      "instance_size": 2264,
+      "source": "CppSDK/Models.hpp",
+      "line": 75709
+    },
+    "RR_OFF_WEM_HELICOPTERS": {
+      "assembly": "Models",
+      "klass": "Models.Models.WorldEntities.WorldEntitiesModel",
+      "field": "_helicopters",
+      "offset": 104,
+      "instance_size": 2264,
+      "source": "CppSDK/Models.hpp",
+      "line": 75710
+    },
+    "RR_OFF_WEM_HIDE_OBJECTS": {
+      "assembly": "Models",
+      "klass": "Models.Models.WorldEntities.WorldEntitiesModel",
+      "field": "_hideObjects",
+      "offset": 432,
+      "instance_size": 2264,
+      "source": "CppSDK/Models.hpp",
+      "line": 75751
+    },
+    "RR_OFF_CONTAINER_POS": {
+      "assembly": "Models",
+      "klass": "Models.Models.Container.ContainerModel",
+      "field": "PositionModel",
+      "offset": 40,
+      "instance_size": 88,
+      "source": "CppSDK/Models.hpp",
+      "line": 92849
+    },
+    "RR_OFF_DOOR_STATE": {
+      "assembly": "Models",
+      "klass": "Models.Models.Door.DoorModel",
+      "field": "State",
+      "offset": 48,
+      "instance_size": 152,
+      "source": "CppSDK/Models.hpp",
+      "line": 91499
+    },
+    "RR_OFF_DOOR_POS": {
+      "assembly": "Models",
+      "klass": "Models.Models.Door.DoorModel",
+      "field": "Position",
+      "offset": 56,
+      "instance_size": 152,
+      "source": "CppSDK/Models.hpp",
+      "line": 91500
+    },
+    "RR_OFF_DOOR_STATE_DATA": {
+      "assembly": "Models",
+      "klass": "Models.Models.DoorState.DoorStateModel",
+      "field": "_state",
+      "offset": 16,
+      "instance_size": 24,
+      "source": "CppSDK/Models.hpp",
+      "line": 91320
+    },
+    "RR_OFF_DROPPED_LOOT_POS": {
+      "assembly": "Models",
+      "klass": "Models.Models.LootModel.LootModel",
+      "field": "InteractPositionModel",
+      "offset": 40,
+      "instance_size": 96,
+      "source": "CppSDK/Models.hpp",
+      "line": 87462
+    },
+    "RR_OFF_VEHICLE_LOOT_POS": {
+      "assembly": "Models",
+      "klass": "Models.Models.VehicleLootModel.VehicleLootModel",
+      "field": "InteractPositionModel",
+      "offset": 40,
+      "instance_size": 88,
+      "source": "CppSDK/Models.hpp",
+      "line": 77805
+    },
+    "RR_OFF_POS_X": {
+      "assembly": "Models",
+      "klass": "Models.Models.PositionModel.PositionModel",
+      "field": "X",
+      "offset": 16,
+      "instance_size": 32,
+      "source": "CppSDK/Models.hpp",
+      "line": 83717
+    },
+    "RR_OFF_POS_Y": {
+      "assembly": "Models",
+      "klass": "Models.Models.PositionModel.PositionModel",
+      "field": "Y",
+      "offset": 20,
+      "instance_size": 32,
+      "source": "CppSDK/Models.hpp",
+      "line": 83718
+    },
+    "RR_OFF_POS_Z": {
+      "assembly": "Models",
+      "klass": "Models.Models.PositionModel.PositionModel",
+      "field": "Z",
+      "offset": 24,
+      "instance_size": 32,
+      "source": "CppSDK/Models.hpp",
+      "line": 83719
+    },
+    "RR_OFF_INTERACT_POS_X": {
+      "assembly": "Models",
+      "klass": "Models.Models.InteractPosition.InteractPositionModel",
+      "field": "X",
+      "offset": 16,
+      "instance_size": 32,
+      "source": "CppSDK/Models.hpp",
+      "line": 89269
+    },
+    "RR_OFF_INTERACT_POS_Y": {
+      "assembly": "Models",
+      "klass": "Models.Models.InteractPosition.InteractPositionModel",
+      "field": "Y",
+      "offset": 20,
+      "instance_size": 32,
+      "source": "CppSDK/Models.hpp",
+      "line": 89270
+    },
+    "RR_OFF_INTERACT_POS_Z": {
+      "assembly": "Models",
+      "klass": "Models.Models.InteractPosition.InteractPositionModel",
+      "field": "Z",
+      "offset": 24,
+      "instance_size": 32,
+      "source": "CppSDK/Models.hpp",
+      "line": 89271
+    },
+    "RR_OFF_LOOK_MODEL": {
+      "assembly": "Models",
+      "klass": "Models.Models.BattleCharacter.BattleCharacterModel",
+      "field": "LookDirection",
+      "offset": 112,
+      "instance_size": 848,
+      "source": "CppSDK/Models.hpp",
+      "line": 100427
+    },
+    "RR_OFF_CHAR_SKELETON": {
+      "assembly": "Models",
+      "klass": "Models.Models.BattleCharacter.BattleCharacterModel",
+      "field": "SkeletonModel",
+      "offset": 312,
+      "instance_size": 848,
+      "source": "CppSDK/Models.hpp",
+      "line": 100452
+    },
+    "RR_OFF_CHAR_INVEH": {
+      "assembly": "Models",
+      "klass": "Models.Models.BattleCharacter.BattleCharacterModel",
+      "field": "InVehicleModel",
+      "offset": 456,
+      "instance_size": 848,
+      "source": "CppSDK/Models.hpp",
+      "line": 100470
+    },
+    "RR_OFF_CHAR_STATE": {
+      "assembly": "Models",
+      "klass": "Models.Models.BattleCharacter.BattleCharacterModel",
+      "field": "StateModel",
+      "offset": 480,
+      "instance_size": 848,
+      "source": "CppSDK/Models.hpp",
+      "line": 100473
+    },
+    "RR_OFF_COMMON_ITEM_IN_HANDS": {
+      "assembly": "Models",
+      "klass": "Models.Data.BattleCharacterCommonData",
+      "field": "ItemInHands",
+      "offset": 184,
+      "instance_size": 552,
+      "source": "CppSDK/Models.hpp",
+      "line": 110466
+    },
+    "RR_OFF_INVEH_ID": {
+      "assembly": "Models",
+      "klass": "Models.Models.InVehicle.InVehicleModel",
+      "field": "_entityId",
+      "offset": 16,
+      "instance_size": 40,
+      "source": "CppSDK/Models.hpp",
+      "line": 89663
+    },
+    "RR_OFF_INVEH_TYPE": {
+      "assembly": "Models",
+      "klass": "Models.Models.InVehicle.InVehicleModel",
+      "field": "_vehicleType",
+      "offset": 32,
+      "instance_size": 40,
+      "source": "CppSDK/Models.hpp",
+      "line": 89665
+    },
+    "RR_OFF_STATE_HIDDEN": {
+      "assembly": "Models",
+      "klass": "Models.Models.BattleCharacterStateModel.BattleCharacterStateModel",
+      "field": "_characterHiddenStateModel",
+      "offset": 32,
+      "instance_size": 64,
+      "source": "CppSDK/Models.hpp",
+      "line": 99716
+    },
+    "RR_OFF_HIDDEN_ID_DATA": {
+      "assembly": "Models",
+      "klass": "Models.Models.CharacterHideObjectState.CharacterHideObjectStateModel",
+      "field": "_hideObjectEntityIdData",
+      "offset": 16,
+      "instance_size": 24,
+      "source": "CppSDK/Models.hpp",
+      "line": 94202
+    },
+    "RR_OFF_HIDE_DESC": {
+      "assembly": "Models",
+      "klass": "Models.Models.HideObject.HideObjectModel",
+      "field": "Description",
+      "offset": 24,
+      "instance_size": 32,
+      "source": "CppSDK/Models.hpp",
+      "line": 89914
+    },
+    "RR_OFF_HIDE_DESC_ID": {
+      "assembly": "Models",
+      "klass": "Models.References.HideObject.LocationHideObjectDescription",
+      "field": "EntityId",
+      "offset": 32,
+      "instance_size": 104,
+      "source": "CppSDK/Models.hpp",
+      "line": 50955
+    },
+    "RR_OFF_HIDE_DESC_POS": {
+      "assembly": "Models",
+      "klass": "Models.References.HideObject.LocationHideObjectDescription",
+      "field": "Position",
+      "offset": 48,
+      "instance_size": 104,
+      "source": "CppSDK/Models.hpp",
+      "line": 50957
+    },
+    "RR_OFF_HIDE_DESC_TYPE": {
+      "assembly": "Models",
+      "klass": "Models.References.HideObject.LocationHideObjectDescription",
+      "field": "HideObjectDescriptionFunc",
+      "offset": 40,
+      "instance_size": 104,
+      "source": "CppSDK/Models.hpp",
+      "line": 50956
+    },
+    "RR_OFF_HIDE_OCCUPANT": {
+      "assembly": "Models",
+      "klass": "Models.Models.HideObject.HideObjectModel",
+      "field": "_entityId",
+      "offset": 16,
+      "instance_size": 32,
+      "source": "CppSDK/Models.hpp",
+      "line": 89913
+    },
+    "RR_OFF_HIDE_DESC_ROT": {
+      "assembly": "Models",
+      "klass": "Models.References.HideObject.LocationHideObjectDescription",
+      "field": "Orientation",
+      "offset": 60,
+      "instance_size": 104,
+      "source": "CppSDK/Models.hpp",
+      "line": 50958
+    },
+    "RR_OFF_HIDE_DESC_INTERACT": {
+      "assembly": "Models",
+      "klass": "Models.References.HideObject.LocationHideObjectDescription",
+      "field": "InteractPoint",
+      "offset": 76,
+      "instance_size": 104,
+      "source": "CppSDK/Models.hpp",
+      "line": 50959
+    },
+    "RR_OFF_BATTLE_VOICE_ROOM": {
+      "assembly": "Battle",
+      "klass": "Game.Battle.BattleModel",
+      "field": "VoiceChatBattleRoomModel",
+      "offset": 1576,
+      "instance_size": 1616,
+      "source": "CppSDK/Battle.hpp",
+      "line": 8005
+    },
+    "RR_OFF_BATTLE_PLAYER_SLOTS": {
+      "assembly": "Battle",
+      "klass": "Game.Battle.BattleModel",
+      "field": "BattleCharacterSlotsModel",
+      "offset": 1224,
+      "instance_size": 1616,
+      "source": "CppSDK/Battle.hpp",
+      "line": 7961
+    },
+    "RR_OFF_VOICE_ROOM_PARTICIPANTS": {
+      "assembly": "Global",
+      "klass": "Game.Global.VoiceChat.VoiceChatRoomModel",
+      "field": "ParticipantsModel",
+      "offset": 56,
+      "instance_size": 64,
+      "source": "CppSDK/Global.hpp",
+      "line": 11636
+    },
+    "RR_OFF_VOICE_STRING_MAP": {
+      "assembly": "Global",
+      "klass": "Game.Global.VoiceChat.VoiceChatParticipantsModel",
+      "field": "_participantStringIdToModels",
+      "offset": 24,
+      "instance_size": 32,
+      "source": "CppSDK/Global.hpp",
+      "line": 11534
+    },
+    "RR_OFF_VOICE_SLOT": {
+      "assembly": "Battle",
+      "klass": "Game.Battle.VoiceChat.VoiceChatBattleParticipantModel",
+      "field": "SlotDescription",
+      "offset": 56,
+      "instance_size": 112,
+      "source": "CppSDK/Battle.hpp",
+      "line": 16758
+    },
+    "RR_OFF_VOICE_HIDE_ID": {
+      "assembly": "Battle",
+      "klass": "Game.Battle.VoiceChat.VoiceChatBattleParticipantModel",
+      "field": "HideObjectEntityId",
+      "offset": 100,
+      "instance_size": 112,
+      "source": "CppSDK/Battle.hpp",
+      "line": 16762
+    },
+    "RR_OFF_VOICE_USER_ID": {
+      "assembly": "Global",
+      "klass": "Game.Global.VoiceChat.VoiceChatRoomParticipantModel",
+      "field": "ProductUserIdString",
+      "offset": 24,
+      "instance_size": 56,
+      "source": "CppSDK/Global.hpp",
+      "line": 11671
+    },
+    "RR_OFF_VOICE_SPEAKING": {
+      "assembly": "Global",
+      "klass": "Game.Global.VoiceChat.VoiceChatRoomParticipantModel",
+      "field": "IsSpeaking",
+      "offset": 33,
+      "instance_size": 56,
+      "source": "CppSDK/Global.hpp",
+      "line": 11673
+    },
+    "RR_OFF_SLOTS_DICTIONARY": {
+      "assembly": "Models",
+      "klass": "Models.Models.BattleCharacterSlots.BattleCharacterSlotsModel",
+      "field": "_slots",
+      "offset": 16,
+      "instance_size": 32,
+      "source": "CppSDK/Models.hpp",
+      "line": 99822
+    },
+    "RR_OFF_SLOT_DATA": {
+      "assembly": "Models",
+      "klass": "Models.Models.BattleCharacterSlots.BattleCharacterSlotModel",
+      "field": "_data_1",
+      "offset": 16,
+      "instance_size": 32,
+      "source": "CppSDK/Models.hpp",
+      "line": 99781
+    },
+    "RR_OFF_SLOT_DESC": {
+      "assembly": "Models",
+      "klass": "Models.Models.BattleCharacterSlots.BattleCharacterSlotModel",
+      "field": "Description",
+      "offset": 24,
+      "instance_size": 32,
+      "source": "CppSDK/Models.hpp",
+      "line": 99782
+    },
+    "RR_OFF_SLOT_ENTITY_ID": {
+      "assembly": "Models",
+      "klass": "Models.Data.BattleCharacterSlotData",
+      "field": "EntityId",
+      "offset": 32,
+      "instance_size": 72,
+      "source": "CppSDK/Models.hpp",
+      "line": 110894
+    },
+    "RR_OFF_SLOT_NICKNAME": {
+      "assembly": "Models",
+      "klass": "Models.Data.BattleCharacterSlotData",
+      "field": "Nickname",
+      "offset": 48,
+      "instance_size": 72,
+      "source": "CppSDK/Models.hpp",
+      "line": 110896
+    },
+    "RR_OFF_SLOT_USER_ID": {
+      "assembly": "Models",
+      "klass": "Models.Data.BattleCharacterSlotData",
+      "field": "EOSProductUserId",
+      "offset": 64,
+      "instance_size": 72,
+      "source": "CppSDK/Models.hpp",
+      "line": 110898
+    },
+    "RR_OFF_SEATS_DATA": {
+      "assembly": "Models",
+      "klass": "Models.Models.VehicleSeats.VehicleSeatsModel",
+      "field": "_data_1",
+      "offset": 16,
+      "instance_size": 48,
+      "source": "CppSDK/Models.hpp",
+      "line": 77697
+    },
+    "RR_OFF_SEAT_OCCUPIED": {
+      "assembly": "Models",
+      "klass": "Models.Data.Vehicle.VehicleSeatData",
+      "field": "Occupied",
+      "offset": 32,
+      "instance_size": 48,
+      "source": "CppSDK/Models.hpp",
+      "line": 114264
+    },
+    "RR_OFF_SEAT_ENTITY_ID": {
+      "assembly": "Models",
+      "klass": "Models.Data.Vehicle.VehicleSeatData",
+      "field": "EntityId",
+      "offset": 40,
+      "instance_size": 48,
+      "source": "CppSDK/Models.hpp",
+      "line": 114265
+    },
+    "RR_OFF_CAR_ID": {
+      "assembly": "Models",
+      "klass": "Models.Models.Car.CarModel",
+      "field": "Id",
+      "offset": 16,
+      "instance_size": 584,
+      "source": "CppSDK/Models.hpp",
+      "line": 96239
+    },
+    "RR_OFF_CAR_OWNER_ROLE": {
+      "assembly": "Models",
+      "klass": "Models.Models.Car.CarModel",
+      "field": "OwnerRole",
+      "offset": 72,
+      "instance_size": 584,
+      "source": "CppSDK/Models.hpp",
+      "line": 96246
+    },
+    "RR_OFF_CAR_DESC": {
+      "assembly": "Models",
+      "klass": "Models.Models.Car.CarModel",
+      "field": "Description",
+      "offset": 120,
+      "instance_size": 584,
+      "source": "CppSDK/Models.hpp",
+      "line": 96252
+    },
+    "RR_OFF_CAR_TRANSFORM": {
+      "assembly": "Models",
+      "klass": "Models.Models.Car.CarModel",
+      "field": "Transform",
+      "offset": 192,
+      "instance_size": 584,
+      "source": "CppSDK/Models.hpp",
+      "line": 96261
+    },
+    "RR_OFF_CAR_SEATS": {
+      "assembly": "Models",
+      "klass": "Models.Models.Car.CarModel",
+      "field": "Seats",
+      "offset": 224,
+      "instance_size": 584,
+      "source": "CppSDK/Models.hpp",
+      "line": 96265
+    },
+    "RR_OFF_HELI_ID": {
+      "assembly": "Models",
+      "klass": "Models.Models.Helicopter.HelicopterModel",
+      "field": "Id",
+      "offset": 16,
+      "instance_size": 400,
+      "source": "CppSDK/Models.hpp",
+      "line": 90090
+    },
+    "RR_OFF_HELI_OWNER_ROLE": {
+      "assembly": "Models",
+      "klass": "Models.Models.Helicopter.HelicopterModel",
+      "field": "OwnerRole",
+      "offset": 232,
+      "instance_size": 400,
+      "source": "CppSDK/Models.hpp",
+      "line": 90117
+    },
+    "RR_OFF_HELI_DESC": {
+      "assembly": "Models",
+      "klass": "Models.Models.Helicopter.HelicopterModel",
+      "field": "Description",
+      "offset": 72,
+      "instance_size": 400,
+      "source": "CppSDK/Models.hpp",
+      "line": 90097
+    },
+    "RR_OFF_HELI_TRANSFORM": {
+      "assembly": "Models",
+      "klass": "Models.Models.Helicopter.HelicopterModel",
+      "field": "Transform",
+      "offset": 112,
+      "instance_size": 400,
+      "source": "CppSDK/Models.hpp",
+      "line": 90102
+    },
+    "RR_OFF_HELI_SEATS": {
+      "assembly": "Models",
+      "klass": "Models.Models.Helicopter.HelicopterModel",
+      "field": "Seats",
+      "offset": 144,
+      "instance_size": 400,
+      "source": "CppSDK/Models.hpp",
+      "line": 90106
+    },
+    "RR_OFF_ENTRY_GAME": {
+      "assembly": "Game",
+      "klass": "Start.UnityEntry",
+      "field": "_game",
+      "offset": 40,
+      "instance_size": 48,
+      "source": "CppSDK/Game.hpp",
+      "line": 473
+    },
+    "RR_OFF_GAME_MODEL": {
+      "assembly": "Game",
+      "klass": "Game.Game",
+      "field": "GameModel",
+      "offset": 216,
+      "instance_size": 232,
+      "source": "CppSDK/Game.hpp",
+      "line": 1116
+    },
+    "RR_OFF_GAME_BATTLE": {
+      "assembly": "Game",
+      "klass": "Game.GameModel",
+      "field": "_battleModel",
+      "offset": 16,
+      "instance_size": 176,
+      "source": "CppSDK/Game.hpp",
+      "line": 1156
+    },
+    "RR_OFF_BATTLE_ENTITIES": {
+      "assembly": "Battle",
+      "klass": "Game.Battle.BattleModel",
+      "field": "BattleEntitiesModel",
+      "offset": 144,
+      "instance_size": 1616,
+      "source": "CppSDK/Battle.hpp",
+      "line": 7826
+    },
+    "RR_OFF_BATTLE_CAMERA": {
+      "assembly": "Battle",
+      "klass": "Game.Battle.BattleModel",
+      "field": "BattleCameraModel",
+      "offset": 856,
+      "instance_size": 1616,
+      "source": "CppSDK/Battle.hpp",
+      "line": 7915
+    },
+    "RR_OFF_BATTLE_AIM": {
+      "assembly": "Battle",
+      "klass": "Game.Battle.BattleModel",
+      "field": "AimTargetModel",
+      "offset": 408,
+      "instance_size": 1616,
+      "source": "CppSDK/Battle.hpp",
+      "line": 7859
+    },
+    "RR_OFF_BATTLE_WORLD": {
+      "assembly": "Battle",
+      "klass": "Game.Battle.BattleEntitiesModel",
+      "field": "_worldEntitiesModel",
+      "offset": 96,
+      "instance_size": 232,
+      "source": "CppSDK/Battle.hpp",
+      "line": 7402
+    },
+    "RR_OFF_BATTLE_MODELS": {
+      "assembly": "Battle",
+      "klass": "Game.Battle.BattleEntitiesModel",
+      "field": "_models",
+      "offset": 80,
+      "instance_size": 232,
+      "source": "CppSDK/Battle.hpp",
+      "line": 7400
+    },
+    "RR_OFF_BATTLE_SLOTS": {
+      "assembly": "Battle",
+      "klass": "Game.Battle.BattleEntitiesModel",
+      "field": "_characterSlotModel",
+      "offset": 128,
+      "instance_size": 232,
+      "source": "CppSDK/Battle.hpp",
+      "line": 7406
+    },
+    "RR_OFF_VIEWS_BATTLE": {
+      "assembly": "Battle",
+      "klass": "Game.Battle.BattleEntitiesUpdater",
+      "field": "_battleEntitiesModel",
+      "offset": 24,
+      "instance_size": 376,
+      "source": "CppSDK/Battle.hpp",
+      "line": 7612
+    },
+    "RR_OFF_VIEWS_MODEL": {
+      "assembly": "Battle",
+      "klass": "Game.Battle.BattleEntitiesUpdater",
+      "field": "_battleModel",
+      "offset": 112,
+      "instance_size": 376,
+      "source": "CppSDK/Battle.hpp",
+      "line": 7623
+    },
+    "RR_OFF_VIEWS_CHARACTERS": {
+      "assembly": "Battle",
+      "klass": "Game.Battle.BattleEntitiesUpdater",
+      "field": "_characterEntityViews",
+      "offset": 272,
+      "instance_size": 376,
+      "source": "CppSDK/Battle.hpp",
+      "line": 7643
+    },
+    "RR_OFF_VIEWS_CARS": {
+      "assembly": "Battle",
+      "klass": "Game.Battle.BattleEntitiesUpdater",
+      "field": "_carEntityViews",
+      "offset": 280,
+      "instance_size": 376,
+      "source": "CppSDK/Battle.hpp",
+      "line": 7644
+    },
+    "RR_OFF_VIEWS_HELICOPTERS": {
+      "assembly": "Battle",
+      "klass": "Game.Battle.BattleEntitiesUpdater",
+      "field": "_helicopterEntityViews",
+      "offset": 288,
+      "instance_size": 376,
+      "source": "CppSDK/Battle.hpp",
+      "line": 7645
+    },
+    "RR_OFF_AIM_BATTLE": {
+      "assembly": "Battle",
+      "klass": "Game.Battle.Entities.Player.Updaters.BattleAimTargetUpdater",
+      "field": "_battleEntitiesModel",
+      "offset": 48,
+      "instance_size": 96,
+      "source": "CppSDK/Battle.hpp",
+      "line": 60872
+    },
+    "RR_OFF_AIM_BRAIN": {
+      "assembly": "Battle",
+      "klass": "Game.Battle.Entities.Player.Updaters.BattleAimTargetUpdater",
+      "field": "_cinemachineBrain",
+      "offset": 72,
+      "instance_size": 96,
+      "source": "CppSDK/Battle.hpp",
+      "line": 60875
+    }
+  }
+}
