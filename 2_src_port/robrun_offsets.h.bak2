@@ -1,0 +1,60 @@
+/* robrun_offsets.h - UPDATED for Latest Game Patch */
+#ifndef ROBRUN_OFFSETS_H
+#define ROBRUN_OFFSETS_H
+
+#define RR_OFF_WORLD_ENTITIES        0x38u   /* WorldModel.WorldEntitiesModel */
+#define RR_OFF_WEM_BATTLE_CHARS      0x18u   /* WorldEntitiesModel._battleCharacters */
+#define RR_OFF_WEM_VEHICLES          0x58u   /* WorldEntitiesModel._vehicles */
+#define RR_OFF_CHAR_ID               0x38u   /* BattleCharacterModel.Id */
+#define RR_OFF_CHAR_DATA             0x40u   /* BattleCharacterModel.Data */
+#define RR_OFF_CHAR_CONFIG           0x48u   /* BattleCharacterModel.Config */
+#define RR_OFF_CHAR_TRANSFORM        0x58u   /* BattleCharacterModel.Transform */
+#define RR_OFF_CHAR_REPL_TRANSFORM   0x60u   /* BattleCharacterModel.ReplicatedTransform */
+#define RR_OFF_CHAR_ISDEAD           0xF0u   /* BattleCharacterModel.IsDead */
+#define RR_OFF_CHAR_PRIVATE          0x10u   /* BattleCharacterModel.PrivateModel */
+#define RR_OFF_CTM_X                 0x10u   /* CharacterTransformModel.X */
+#define RR_OFF_CTM_Y                 0x14u   /* CharacterTransformModel.Y */
+#define RR_OFF_CTM_Z                 0x18u   /* CharacterTransformModel.Z */
+#define RR_OFF_CTM_PITCH             0x1Cu   /* CharacterTransformModel.Pitch */
+#define RR_OFF_CTM_YAW               0x20u   /* CharacterTransformModel.Yaw */
+#define RR_OFF_CTM_ROLL              0x24u   /* CharacterTransformModel.Roll */
+#define RR_OFF_TRANSFORM_X           0x10u   /* TransformModel._x */
+#define RR_OFF_TRANSFORM_Y           0x18u   /* TransformModel._y */
+#define RR_OFF_TRANSFORM_Z           0x20u   /* TransformModel._z */
+#define RR_OFF_TRANSFORM_RX          0x28u   /* TransformModel._rx */
+#define RR_OFF_TRANSFORM_RY          0x30u   /* TransformModel._ry */
+#define RR_OFF_TRANSFORM_RZ          0x38u   /* TransformModel._rz */
+#define RR_OFF_RTRANSFORM_POS        0x10u   /* CharacterReplicatedTransformModel._position */
+#define RR_OFF_RTRANSFORM_RX         0x18u   /* CharacterReplicatedTransformModel._rx */
+#define RR_OFF_RTRANSFORM_RY         0x20u   /* CharacterReplicatedTransformModel._ry */
+#define RR_OFF_RTRANSFORM_RZ         0x28u   /* CharacterReplicatedTransformModel._rz */
+#define RR_OFF_DATA_COMMON           0x20u   /* BattleCharacterData.CommonData */
+#define RR_OFF_DATA_PRIVATE          0x28u   /* BattleCharacterData.PrivateData */
+#define RR_OFF_DATA_PUBLIC           0x30u   /* BattleCharacterData.PublicData */
+#define RR_OFF_COMMON_ROLE           0x20u   /* BattleCharacterCommonData.Role */
+#define RR_OFF_PRIVATE_HEALTH        0x38u   /* BattleCharacterPrivateData.Health */
+#define RR_OFF_PUBLIC_ARMOR          0x38u   /* BattleCharacterPublicData.HasArmor */
+#define RR_OFF_CHAR_WEAPON           0x150u  /* BattleCharacterModel.Weapon */
+#define RR_OFF_CHAR_CROUCH           0x160u  /* BattleCharacterModel.CrouchModel */
+#define RR_OFF_CHAR_STANCE           0x1F0u  /* BattleCharacterModel.BattleStanceModel */
+#define RR_OFF_CHAR_PBM              0x258u  /* BattleCharacterModel.PlayerBattleModel */
+#define RR_OFF_WEAPON_ITEM           0x10u   /* WeaponModel._itemInHands */
+#define RR_OFF_CROUCH_BOOL           0x10u   /* CrouchModel._isCrouching */
+#define RR_OFF_STANCE_REF            0x18u   /* BattleStanceModel._battleStance */
+#define RR_OFF_PBM_DATA              0x10u   /* PlayerBattleModel.Data */
+#define RR_OFF_CAM_POS               0x10u   /* BattleCameraModel.Position */
+#define RR_OFF_CAM_ROT               0x1Cu   /* BattleCameraModel.Orientation */
+#define RR_OFF_CAM_FWD               0x3Cu   /* BattleCameraModel.Forward */
+#define RR_OFF_CAM_RIGHT             0x48u   /* BattleCameraModel.Right */
+#define RR_OFF_CAM_UP                0x54u   /* BattleCameraModel.Up */
+#define RR_OFF_CAM_DIST              0x60u   /* BattleCameraModel.DistanceToFollowTarget */
+#define RR_OFF_HEALTH_VALUE          0x10u   /* HealthModel._health */
+#define RR_OFF_HEALTH_DEAD           0x18u   /* HealthModel._isDead */
+#define RR_OFF_HEALTH_MAX            0x20u   /* HealthModel._maxAmount */
+
+#define RR_SF_WORLDMODEL             0x81BBF40u
+#define RR_SF_BATTLECAMERAMODEL      0x81B3C98u
+#define RR_SF_WORLDENTITIESMODEL     0x81B7148u
+#define RR_SF_BATTLECHARACTERMODEL   0x817EF10u
+
+#endif /* ROBRUN_OFFSETS_H */

@@ -198,25 +198,6 @@ int rr_aim_visible_point(const RR_PLAYER* p, int group, const RR_CAMERA* cam,
     if (!p || !out || (clear && !cam)) return 0;
     if (group < 0 || group >= RR_AIM_GROUP_COUNT) group = RR_AIM_HEAD;
     if (p->full_rig) return full_rig_point(p,group,cam,width,height,out,clear);
-    if (group>=RR_AIM_FACE) return 0;
-    if (group>=5) return limb_point(p,group,cam,width,height,out,clear);
-    if (group != 4) {
-        *out = group_point(p, group);
-        return !clear || clear(cam->pos,*out);
-    }
-    int found = 0; float best = 0;
-    for (int i = 0; i < 6; ++i) {
-        RR_V3 point; float x, y;
-        if (i<4) point=group_point(p,i);
-        else if (!limb_point(p,i+1,cam,width,height,&point,clear)) continue;
-        if (!game_w2s(cam, &point, width, height, &x, &y)) continue;
-        float dx = x - width * 0.5f, dy = y - height * 0.5f;
-        float d = dx*dx + dy*dy;
-        if ((!found || d < best) && (i >= 4 || !clear || clear(cam->pos,point))) {
-            *out = point; best = d; found = 1;
-        }
-    }
-    return found;
 }
 
 int rr_aim_point(const RR_PLAYER* p, int group, const RR_CAMERA* cam,
